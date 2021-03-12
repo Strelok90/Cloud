@@ -13,7 +13,7 @@ public class Controller {
     private TableView filesOnServerTable;
 
     @FXML
-    private VBox leftPanel, rightPanel;
+    VBox leftPanel, rightPanel;
 
     public void btnExitAction(ActionEvent actionEvent) {
         Platform.exit();
