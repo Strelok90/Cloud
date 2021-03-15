@@ -23,17 +23,18 @@ public class LoginController {
     @FXML
     Label errorLabel;
 
-    public void auth(ActionEvent actionEvent) throws IOException  {
-     //   Network.start();
-     //   Network.sendMsg(new AuthRequest(login.getText()));
-        folderName = login.getText();
-        System.out.println(folderName);
-        globParent.getScene().getWindow().hide();
-
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        // New window (Stage)
-        Stage newWindow = new Stage();
-        newWindow.setScene(new Scene(root, 1000, 600));
-        newWindow.show(); //show - показ окна
+    public void auth(ActionEvent actionEvent) throws IOException {
+//        //Network.start();
+//        Network.sendMsg(new AuthRequest(login.getText()));
+//        folderName = login.getText();
+//        System.out.println(folderName);
+//        globParent.getScene().getWindow().hide();
+//
+//        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+//        // New window (Stage)
+//        Stage newWindow = new Stage();
+//
+//        newWindow.show(); //show - показ окна
+//    }
     }
 }
