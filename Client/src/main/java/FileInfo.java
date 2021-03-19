@@ -39,7 +39,7 @@ public class FileInfo {
         return type;
     }
 
-    public void setType(){
+    public void setType(FileType type) {
         this.type = type;
     }
 
@@ -47,7 +47,7 @@ public class FileInfo {
         return size;
     }
 
-    public void setSize(){
+    public void setSize(long size) {
         this.size = size;
     }
 
