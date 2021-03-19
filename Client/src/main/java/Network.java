@@ -17,6 +17,7 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public static void stop() {
@@ -35,5 +36,18 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void sendMsg(AbstractMessage msg){
+        try {
+            out.writeObject(msg);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static AbstractMessage readObject() throws ClassNotFoundException, IOException{
+        Object obj = in.readObject();
+        return (AbstractMessage) obj;
     }
 }

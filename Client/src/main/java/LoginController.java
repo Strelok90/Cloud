@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -23,9 +22,9 @@ public class LoginController {
     @FXML
     Label errorLabel;
 
-    public void auth(ActionEvent actionEvent) throws IOException  {
-     //   Network.start();
-     //   Network.sendMsg(new AuthRequest(login.getText()));
+    public void auth() throws IOException  {
+        Network.start();
+        Network.sendMsg(new AuthRequest(login.getText()));
         folderName = login.getText();
         System.out.println(folderName);
         globParent.getScene().getWindow().hide();
