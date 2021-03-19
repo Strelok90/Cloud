@@ -1,18 +1,16 @@
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
@@ -40,23 +38,21 @@ public class LeftPanelController implements Initializable {
 
         TableColumn<FileInfo, Long> fileSizeColumn = new TableColumn<>("Размер");
         fileSizeColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getSize()));
-        fileSizeColumn.setCellFactory(column -> {
-            return new TableCell<FileInfo, Long>(){
-                @Override
-                protected void updateItem(Long item, boolean empty){
-                    super.updateItem(item, empty);
-                    if (item == null || empty){
-                        setText(null);
-                        setStyle("");
-                    } else {
-                        String text = String.format("%,d bytes", item);
-                        if (item == -1L){
-                            text = "[DIR]";
-                        }
-                        setText(text);
+        fileSizeColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Long item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    String text = String.format("%,d bytes", item);
+                    if (item == -1L) {
+                        text = "[DIR]";
                     }
+                    setText(text);
                 }
-            };
+            }
         });
         fileSizeColumn.setPrefWidth(120);
 
@@ -74,14 +70,12 @@ public class LeftPanelController implements Initializable {
         }
         disksBox.getSelectionModel().select(0);
 
-        filesTable.setOnMouseClicked(new EventHandler<MouseEvent>() { //кликаем мышькой
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getClickCount() == 2){
-                    Path path = Paths.get(pathField.getText()).resolve(filesTable.getSelectionModel().getSelectedItem().getFilename());
-                    if (Files.isDirectory(path)){
-                        updateList(path);
-                    }
+        //кликаем мышькой
+        filesTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2){
+                Path path = Paths.get(pathField.getText()).resolve(filesTable.getSelectionModel().getSelectedItem().getFilename());
+                if (Files.isDirectory(path)){
+                    updateList(path);
                 }
             }
         });
@@ -125,7 +119,6 @@ public class LeftPanelController implements Initializable {
     public void deleteAction(ActionEvent actionEvent) {
         Path path = Paths.get(pathField.getText()).resolve(filesTable.getSelectionModel().getSelectedItem().getFilename());
 
-        if(path == null) return;
         try {
             Files.delete(path);
             updateList(path.getParent());
@@ -135,6 +128,10 @@ public class LeftPanelController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Не удалось удалить файл" + path.getFileName());
             alert.showAndWait();
         }
-
+    }
+    public void uploadToServer(ActionEvent actionEvent) throws IOException, NoSuchAlgorithmException { //Загрузить на сервер
+        Path path = Paths.get(pathField.getText()).resolve(filesTable.getSelectionModel().getSelectedItem().getFilename());
+        Network.sendMsg(new FileMessage(path));
+        System.out.println("Сообщение на сервер отправлено");
     }
 }

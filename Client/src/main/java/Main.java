@@ -14,6 +14,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> Platform.exit());
+        System.out.println("Network starter");
     }
 
     public static void main(String[] args) {
