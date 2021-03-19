@@ -13,9 +13,7 @@ public class Main extends Application {
         primaryStage.setTitle("BlackBox");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
-        primaryStage.setOnCloseRequest(event -> {
-            Platform.exit();
-        });
+        primaryStage.setOnCloseRequest(event -> Platform.exit());
     }
 
     public static void main(String[] args) {
